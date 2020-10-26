@@ -52,6 +52,6 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 routesGenerator := InjectedRoutesGenerator
 
-routesImport += "utils.route.Binders._"
+
 
 
