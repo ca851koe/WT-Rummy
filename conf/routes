@@ -4,8 +4,8 @@
 
 # Controller for Sudoku
 
-GET     /                           controllers.HomeController.about
-
+GET     /                           controllers.HomeController.rummi
+GET     /about                      controllers.HomeController.about
 
 
 # Map static resources from the /public folder to the /assets URL path
