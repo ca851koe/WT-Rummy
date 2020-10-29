@@ -6,6 +6,12 @@
 
 GET     /                           controllers.HomeController.rummi
 GET     /about                      controllers.HomeController.about
+GET     /sorted                     controllers.HomeController.rummiSorted
+GET     /draw                       controllers.HomeController.newTile
+GET     /switchPlayer               controllers.HomeController.switchPlayer
+GET     /move/:from/:to             controllers.HomeController.moveTile(from, to)
+GET     /undo                       controllers.HomeController.undoStep
+GET     /redo                       controllers.HomeController.redoStep
 
 
 # Map static resources from the /public folder to the /assets URL path
