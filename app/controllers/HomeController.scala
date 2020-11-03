@@ -52,4 +52,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def about= Action {
     Ok(views.html.index())
   }
+
+  def start = Action {
+    Ok(views.html.index())
+  }
+
+  def rules = Action {
+    Ok(views.html.rules())
+  }
 }

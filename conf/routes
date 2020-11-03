@@ -4,7 +4,8 @@
 
 # Controller for Sudoku
 
-GET     /                           controllers.HomeController.rummi
+GET     /                           controllers.HomeController.start
+GET     /new                        controllers.HomeController.rummi
 GET     /about                      controllers.HomeController.about
 GET     /sorted                     controllers.HomeController.rummiSorted
 GET     /draw                       controllers.HomeController.newTile
@@ -12,6 +13,7 @@ GET     /switchPlayer               controllers.HomeController.switchPlayer
 GET     /move/:from/:to             controllers.HomeController.moveTile(from, to)
 GET     /undo                       controllers.HomeController.undoStep
 GET     /redo                       controllers.HomeController.redoStep
+GET     /rules                      controllers.HomeController.rules
 
 
 # Map static resources from the /public folder to the /assets URL path
