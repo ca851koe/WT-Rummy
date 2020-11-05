@@ -16,40 +16,40 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
 
   def rummi = Action {
-    Ok(rummiAsText)
+    Ok(views.html.rummikub(gameController))
   }
 
   def rummiSorted: Action[AnyContent] = Action {
     gameController.sortRack
-    Ok(rummiAsText)
+    Ok(views.html.rummikub(gameController))
   }
 
   def newTile: Action[AnyContent] = Action {
     gameController.draw
-    Ok(rummiAsText)
+    Ok(views.html.rummikub(gameController))
   }
 
   def switchPlayer: Action[AnyContent] = Action {
     gameController.switchPlayer
-    Ok(rummiAsText)
+    Ok(views.html.rummikub(gameController))
   }
 
   def moveTile(from:String, to: String): Action[AnyContent] = Action {
     gameController.moveTile(from, to)
-    Ok(rummiAsText)
+    Ok(views.html.rummikub(gameController))
   }
 
   def undoStep: Action[AnyContent] = Action {
     gameController.undo
-    Ok(rummiAsText)
+    Ok(views.html.rummikub(gameController))
   }
 
   def redoStep: Action[AnyContent] = Action {
     gameController.redo
-    Ok(rummiAsText)
+    Ok(views.html.rummikub(gameController))
   }
 
   def about= Action {
-    Ok(views.html.index())
+    Ok(views.html.rules())
   }
 }

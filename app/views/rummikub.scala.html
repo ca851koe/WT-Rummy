@@ -1,0 +1,108 @@
+@(controller:de.htwg.se.rummi.controller.ControllerInterface)
+
+@number_of_rows_field= @{controller.field.ROWS}
+@number_of_cols_field= @{controller.field.COLS}
+@number_of_rows_rack= @{controller.rackOfActivePlayer.ROWS}
+@number_of_cols_rack= @{controller.rackOfActivePlayer.COLS}
+@tile_colour(grid: String, row: Int, col: Int) = @{
+    var c = ""
+    if(grid == "F") {
+        if (!controller.field.tiles.get(row, col).isEmpty) {
+            c =
+            controller.field.tiles(row, col).colour.name match {
+                case "RED" => "red"
+                case "BLUE" => "blue"
+                case "GREEN" => "green"
+                case "YELLOW" => "yellow"
+                case "WHITE" => "joker"
+            }
+        }
+    }
+    else if (grid == "R") {
+        if (!controller.rackOfActivePlayer.tiles.get(row, col).isEmpty) {
+            c =
+            controller.rackOfActivePlayer.tiles(row, col).colour.name match {
+                case "RED" => "red"
+                case "BLUE" => "blue"
+                case "GREEN" => "green"
+                case "YELLOW" => "yellow"
+                case "WHITE" => "joker"
+            }
+        }
+    }
+}
+
+@player_name = @{controller.activePlayer.name}
+@game_state = @{controller.getGameState.toString}
+
+
+
+@main("Rummikub") {
+    <div class="gamecontainer">
+        <a href="/about">Get to the rules page</a><br><br>
+        <div class="game">
+            <span class="field">
+                <table cellspacing="2" rules="all" style="text-align: center">
+                    <tr>
+                        @for(col <- 0 until number_of_cols_field + 1) {
+                            <th width="50" height="50">
+                                @{if (col == 0) {
+                                ""
+                            } else {
+                                    (col + 64).toChar
+                                }}
+                            </th>
+                        }
+                    </tr>
+                    @for(row <- 0 until number_of_rows_field) {
+                        <tr>
+                            <th width="50" height="50">@{row + 1}</th>
+                            @for(col <- 0 until number_of_cols_field) {
+                                <td align="center">
+                                     <span class="tile @tile_colour("F", row + 1, col + 1)">
+                                        @{if (controller.field.tiles.get(row + 1, col + 1).isEmpty) {
+                                            ""
+                                        } else {
+                                            controller.field.tiles(row + 1, col + 1).tileToString
+                                        }
+                                        }
+                                    </span>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </table><br><br><br>
+
+            </span>
+            <span class="rack">
+                <table cellspacing="2" rules="all">
+                    @for(row <- 0 until number_of_rows_rack) {
+                        <tr>
+                            <th width="50" height="50">@{number_of_rows_field + row + 1}</th>
+                            @for(col <- 0 until number_of_cols_rack) {
+                                <td width="50" height="50" align="center">
+                                     <span class="tile @tile_colour("R", row + 1, col + 1)">
+                                        @{if (controller.rackOfActivePlayer.tiles.get(row + 1, col + 1).isEmpty) {
+                                            ""
+                                        } else {
+                                            controller.rackOfActivePlayer.tiles(row + 1, col + 1).tileToString
+                                        }
+                                        }
+                                    </span>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </table><br><br><br>
+            </span>
+            <div class="player">
+                <p>
+                    <strong><em>Active Player: </em></strong> @player_name
+                </p>
+            </div>
+            <div class="gameState">
+                    <strong><em>Game State: </em></strong> @game_state
+            </div>
+        </div>
+    </div>
+}

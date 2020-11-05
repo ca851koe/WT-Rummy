@@ -1,0 +1,391 @@
+@()
+
+@leer = {&nbsp}
+@leer_content = {&nbsp&nbsp&nbsp&nbsp&nbsp}
+@line = @{"------"}
+@tile_above = {@line@leer@leer@leer@leer@leer@leer}
+@two_tiles = {@tile_above@tile_above}
+@three_tiles = {@two_tiles@tile_above}
+@four_tiles = {@three_tiles@tile_above}
+@space_between = {&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp}
+@space_bet_cont = {&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp}
+
+@tile_colour(colour: String) = @{
+    colour match {
+        case "R" => "red"
+        case "B" => "blue"
+        case "G" => "green"
+        case "Y" => "yellow"
+    }
+}
+
+@main("Rummikub Rules") {
+
+    <p>
+        <img src = @routes.Assets.versioned("images/Rummikub_Titel.jpg")>
+    </p>
+
+    <h3>Goal of the Game</h3>
+    <p>
+        Be the first to put all of your tiles from your rack on the field.
+    </p>
+    <br>
+
+    <p>
+        <strong>Content</strong>
+    </p>
+    <ul type=" disc">
+        <li>104 tiles, with numbers from 1-13, 4 different colours (red, yellow, green, blue)</li>
+        <li>2 jokers</li>
+    </ul>
+
+    <p>Every Player receives 14 tiles from the tile-pool. These tiles are placed on the player's rack.</p><br>
+
+    <h3>Series of tiles</h3>
+    <p>
+        A <strong>"Group"</strong> consists of three or four tiles which have the same value, but <strong>different colours</strong>.<br>
+        For example: 8 in red, 8 in yellow, 8 in green, 8 in blue.<br><br>
+
+        A <strong>"Row"</strong> consists of minimum three and maximum 13 tiles with consecutive numerical values, but all must have the <strong>same colour</strong>.<br>
+        For example: 2, 3, 4, 5 and 6 in red.
+
+    </p><br>
+
+    <h3>Game start</h3>
+    <p>
+        At the first lay out, each player must place at least 30 points with one or more series from his rack on the
+        field.<br>This turn, the player is not allowed to concatenate a tile with the tiles which are already on the field,
+        or to manipulate a row, or to replace a tile with a joker.<br>
+        If it is someone's turn and cannot place a tile, he must take a tile from the pool.<br>
+        Then it is the next players turn.
+    </p><br>
+
+    <h3>Manipulate Series</h3>
+    <p>
+        The players try to place as many tiles as possible on the field by rebuilding series or
+        adding tiles to series that are already on the field.<br>
+        At the end of each turn, only complete series may be on the field and no single tiles may be left over.<br>
+        No tiles may be put back on the rack of a player.<br>
+        <br>
+        Series can be manipulated in the following ways:<br>
+        <ul type="disc">
+            <li><strong>Create new series with one or more tiles from your rack:</strong></li><br>
+            <table cellpadding="10">
+                <thead>
+                    <tr><th width="300"align="left">Tiles on the rack</th>
+                        <th width="300"align="left">Tiles on the field</th>
+                        <th width="300" align="left"></th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>
+                        <table cellspacing="10" border frame="void" cellpadding="10">
+                            <tr>
+                                <td><span class="tile @tile_colour("B")">3B</span></td>
+                                <td><span class="tile @tile_colour("B")">8B</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">4B</span></td>
+                                    <td><span class="tile @tile_colour("B")">5B</span></td>
+                                    <td><span class="tile @tile_colour("B")">6B</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("Y")">8Y</span></td>
+                                    <td><span class="tile @tile_colour("R")">8R</span></td>
+                                    <td><span class="tile @tile_colour("G")">8G</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Player could add the blue 3
+                        to the blue row 4,5,6
+                        and the blue 8 to the group of eights.
+                        </td>
+
+                    <td>
+                        <table cellspacing="10" border frame="void" cellpadding="10">
+                            <tr>
+                                <td><span class="tile @tile_colour("B")">3B</span></td>
+                                <td><span class="tile @tile_colour("B")">4B</span></td>
+                                <td><span class="tile @tile_colour("B")">5B</span></td>
+                                <td><span class="tile @tile_colour("B")">6B</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("Y")">8Y</span></td>
+                                    <td><span class="tile @tile_colour("R")">8R</span></td>
+                                    <td><span class="tile @tile_colour("G")">8G</span></td>
+                                    <td><span class="tile @tile_colour("B")">8B</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br>
+            <li><strong>Use the fourth tile of a group to form a new series:</strong></li><br>
+            <table cellpadding="10">
+                <thead>
+                    <tr><th width="300"align="left">Tiles on the rack</th>
+                        <th width="300"align="left">Tiles on the field</th>
+                        <th width="300" align="left"></th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>
+                        <table cellspacing="10" border frame="void" cellpadding="10">
+                            <tr>
+                                <td><span class="tile @tile_colour("B")">3B</span></td>
+                                <td><span class="tile @tile_colour("B")">5B</span></td>
+                                <td><span class="tile @tile_colour("B")">6B</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">4B</span></td>
+                                    <td><span class="tile @tile_colour("R")">4R</span></td>
+                                    <td><span class="tile @tile_colour("G")">4G</span></td>
+                                    <td><span class="tile @tile_colour("Y")">4Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>A tile is missing to have a valid blue row on the rack.
+                        The player takes the blue 4 from the group of four to complete his row.
+                    </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">3B</span></td>
+                                    <td><span class="tile @tile_colour("B")">4B</span></td>
+                                    <td><span class="tile @tile_colour("B")">5B</span></td>
+                                    <td><span class="tile @tile_colour("B")">6B</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("R")">4R</span></td>
+                                    <td><span class="tile @tile_colour("G")">4G</span></td>
+                                    <td><span class="tile @tile_colour("Y")">4Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br>
+            <li><strong>Exchanging a tile in a row to form a new series:</strong></li><br>
+            <table cellpadding="10">
+                <thead>
+                    <tr><th width="300"align="left">Tiles on the rack</th>
+                        <th width="300"align="left">Tiles on the field</th>
+                        <th width="300" align="left"></th></tr></tr>
+                </thead>
+                <tbody>
+                    <tr><td>
+                        <table cellspacing="10" border frame="void" cellpadding="10">
+                            <tr>
+                                <td><span class="tile @tile_colour("B")">9B</span></td>
+                                <td><span class="tile @tile_colour("G")">6G</span></td>
+                                <td><span class="tile @tile_colour("Y")">6Y</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">6B</span></td>
+                                    <td><span class="tile @tile_colour("B")">7B</span></td>
+                                    <td><span class="tile @tile_colour("B")">8B</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr><td>The player adds a blue 9 to a row and forms a new group with the sixes.</td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">7B</span></td>
+                                    <td><span class="tile @tile_colour("B")">8B</span></td>
+                                    <td><span class="tile @tile_colour("B")">9B</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">6B</span></td>
+                                    <td><span class="tile @tile_colour("G")">6G</span></td>
+                                    <td><span class="tile @tile_colour("Y")">6Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br>
+            <li><strong>To split a row:</strong></li><br>
+            <table cellpadding="10">
+                <thead>
+                    <tr><th width="300"align="left">Tiles on the rack</th>
+                        <th width="300"align="left">Tiles on the field</th>
+                        <th width="300" align="left"></th></tr></tr>
+                </thead>
+                <tbody>
+                    <tr><td>
+                        <table cellspacing="10" border frame="void" cellpadding="10">
+                            <tr>
+                                <td><span class="tile @tile_colour("R")">6R</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("R")">4R</span></td>
+                                    <td><span class="tile @tile_colour("R")">5R</span></td>
+                                    <td><span class="tile @tile_colour("R")">6R</span></td>
+                                    <td><span class="tile @tile_colour("R")">7R</span></td>
+                                    <td><span class="tile @tile_colour("R")">8R</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr><td>The player splits a row and uses the red 6 to form two new rows.</td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("R")">4R</span></td>
+                                    <td><span class="tile @tile_colour("R")">5R</span></td>
+                                    <td><span class="tile @tile_colour("R")">6R</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("R")">6R</span></td>
+                                    <td><span class="tile @tile_colour("R")">7R</span></td>
+                                    <td><span class="tile @tile_colour("R")">8R</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table><br>
+            <li><strong>Combined splitting:</strong></li><br>
+            <table cellpadding="10">
+                <thead>
+                    <tr><th width="300"align="left">Tiles on the rack</th>
+                        <th width="300"align="left">Tiles on the field</th>
+                        <th width="300" align="left"></th></tr></tr>
+                </thead>
+                <tbody>
+                    <tr><td>
+                        <table cellspacing="10" border frame="void" cellpadding="10">
+                            <tr>
+                                <td><span class="tile @tile_colour("B")">1B</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("Y")">1Y</span></td>
+                                    <td><span class="tile @tile_colour("Y")">2Y</span></td>
+                                    <td><span class="tile @tile_colour("Y")">3Y</span></td>
+                                    <td><span class="tile @tile_colour("Y")">4Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">1B</span></td>
+                                    <td><span class="tile @tile_colour("G")">1G</span></td>
+                                    <td><span class="tile @tile_colour("R")">1R</span></td>
+                                    <td><span class="tile @tile_colour("Y")">1Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr><td>The player combines a blue 1 from his rack with the yellow 1 from the row and the red 1
+                        from the group to form a new group of ones. The rest of the tiles form a another group
+                        of ones and a row 2, 3, 4.</td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("G")">1G</span></td>
+                                    <td><span class="tile @tile_colour("B")">1B</span></td>
+                                    <td><span class="tile @tile_colour("Y")">1Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("Y")">2Y</span></td>
+                                    <td><span class="tile @tile_colour("Y")">3Y</span></td>
+                                    <td><span class="tile @tile_colour("Y")">4Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr><td></td>
+                        <td>
+                            <table cellspacing="10" border frame="void" cellpadding="10">
+                                <tr>
+                                    <td><span class="tile @tile_colour("B")">1B</span></td>
+                                    <td><span class="tile @tile_colour("R")">1R</span></td>
+                                    <td><span class="tile @tile_colour("Y")">1Y</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </ul>
+    </p>
+
+    <h3>Joker</h3>
+    <p>
+        The joker can replace any tile. As soon as it is used, it automatically takes over the value of the
+        replaced tile.<br> A joker cannot be exchanged before or during the first time a player put tiles on the field.
+    </p>
+
+    <h4>Manipulate groups or rows with a joker</h4>
+    <p>
+        Players are allowed to manipulate groups or rows or to add a tile to them, if they contain a joker.<br>
+        Also it is possible to use a joker by manipulation of a group or a row again,<br> but it's only allowed
+        to use it in the same turn and not to take it back on the rack.<br><br>
+        A joker can be replaced by a tile from your rack or by another suitable tile from the field.<br>
+            If a joker is removed from a group of three tiles, it can be replaced by a tile in any of the two missing colours.
+    </p><br>
+
+    <h3>End of the game</h3>
+    <p>
+        If a player has put all his tiles from his rack on the field the game ends.
+    </p><br><br><br>
+
+    <p>
+        <a href="/">Play the game!</a><br><br>
+    </p>
+
+
+}
