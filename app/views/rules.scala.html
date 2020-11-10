@@ -21,18 +21,30 @@
 
 @main("Rummikub Rules") {
 
-    <p>
-        <img src = @routes.Assets.versioned("images/Rummikub_Titel.jpg")>
-    </p>
+    <div id="header">
+        <div class="container">
+            <a href="/" class="logo">
+                <img src="@routes.Assets.versioned("images/rummy.png")">
+                <h1>Rummikub the Game</h1>
+            </a>
+            <ul class="nav">
+                <li>
+                    <a href="/about">Rules</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="rules">
 
-    <h3>Goal of the Game</h3>
+    <div class="container">
+    <h2>Goal of the Game</h2>
     <p>
         Be the first to put all of your tiles from your rack on the field.
     </p>
     <br>
 
     <p>
-        <strong>Content</strong>
+        <h3>Content</h3>
     </p>
     <ul type=" disc">
         <li>104 tiles, with numbers from 1-13, 4 different colours (red, yellow, green, blue)</li>
@@ -386,6 +398,7 @@
     <p>
         <a href="/">Play the game!</a><br><br>
     </p>
-
+    </div>
+    </div>
 
 }

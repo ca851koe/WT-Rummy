@@ -1,108 +1,144 @@
-@(controller:de.htwg.se.rummi.controller.ControllerInterface)
+@(controller: de.htwg.se.rummi.controller.ControllerInterface)
 
-@number_of_rows_field= @{controller.field.ROWS}
-@number_of_cols_field= @{controller.field.COLS}
-@number_of_rows_rack= @{controller.rackOfActivePlayer.ROWS}
-@number_of_cols_rack= @{controller.rackOfActivePlayer.COLS}
 @tile_colour(grid: String, row: Int, col: Int) = @{
     var c = ""
     if(grid == "F") {
-        if (!controller.field.tiles.get(row, col).isEmpty) {
+        if(!controller.field.tiles.get(row, col).isEmpty) {
             c =
-            controller.field.tiles(row, col).colour.name match {
-                case "RED" => "red"
-                case "BLUE" => "blue"
-                case "GREEN" => "green"
-                case "YELLOW" => "yellow"
-                case "WHITE" => "joker"
-            }
+                    controller.field.tiles(row, col).colour.name match {
+                        case "RED" => "red"
+                        case "BLUE" => "blue"
+                        case "GREEN" => "green"
+                        case "YELLOW" => "yellow"
+                        case "WHITE" => "joker"
+                    }
         }
     }
-    else if (grid == "R") {
-        if (!controller.rackOfActivePlayer.tiles.get(row, col).isEmpty) {
+    else if(grid == "R") {
+        if(!controller.rackOfActivePlayer.tiles.get(row, col).isEmpty) {
             c =
-            controller.rackOfActivePlayer.tiles(row, col).colour.name match {
-                case "RED" => "red"
-                case "BLUE" => "blue"
-                case "GREEN" => "green"
-                case "YELLOW" => "yellow"
-                case "WHITE" => "joker"
-            }
+                    controller.rackOfActivePlayer.tiles(row, col).colour.name match {
+                        case "RED" => "red"
+                        case "BLUE" => "blue"
+                        case "GREEN" => "green"
+                        case "YELLOW" => "yellow"
+                        case "WHITE" => "joker"
+                    }
         }
     }
 }
 
-@player_name = @{controller.activePlayer.name}
-@game_state = @{controller.getGameState.toString}
+@player_name = @{
+    controller.activePlayer.name
+}
+@game_state = @{
+    controller.getGameState.toString
+}
 
+@fieldRows = @{
+    controller.field.ROWS
+}
+@fieldCols = @{
+    controller.field.COLS
+}
 
+@rackRows = @{
+    controller.rackOfActivePlayer.ROWS
+}
+@rackCols = @{
+    controller.rackOfActivePlayer.COLS
+}
 
 @main("Rummikub") {
-    <div class="gamecontainer">
-        <a href="/about">Get to the rules page</a><br><br>
-        <div class="game">
-            <span class="field">
-                <table cellspacing="2" rules="all" style="text-align: center">
-                    <tr>
-                        @for(col <- 0 until number_of_cols_field + 1) {
-                            <th width="50" height="50">
-                                @{if (col == 0) {
-                                ""
-                            } else {
-                                    (col + 64).toChar
-                                }}
-                            </th>
-                        }
-                    </tr>
-                    @for(row <- 0 until number_of_rows_field) {
-                        <tr>
-                            <th width="50" height="50">@{row + 1}</th>
-                            @for(col <- 0 until number_of_cols_field) {
-                                <td align="center">
-                                     <span class="tile @tile_colour("F", row + 1, col + 1)">
-                                        @{if (controller.field.tiles.get(row + 1, col + 1).isEmpty) {
-                                            ""
-                                        } else {
-                                            controller.field.tiles(row + 1, col + 1).tileToString
-                                        }
-                                        }
-                                    </span>
-                                </td>
-                            }
-                        </tr>
-                    }
-                </table><br><br><br>
 
-            </span>
-            <span class="rack">
-                <table cellspacing="2" rules="all">
-                    @for(row <- 0 until number_of_rows_rack) {
-                        <tr>
-                            <th width="50" height="50">@{number_of_rows_field + row + 1}</th>
-                            @for(col <- 0 until number_of_cols_rack) {
-                                <td width="50" height="50" align="center">
-                                     <span class="tile @tile_colour("R", row + 1, col + 1)">
-                                        @{if (controller.rackOfActivePlayer.tiles.get(row + 1, col + 1).isEmpty) {
-                                            ""
-                                        } else {
-                                            controller.rackOfActivePlayer.tiles(row + 1, col + 1).tileToString
-                                        }
-                                        }
-                                    </span>
-                                </td>
+    <div id="header">
+        <div class="container">
+            <a href="/" class="logo">
+                <img src="@routes.Assets.versioned("images/rummy.png")">
+                <h1>Rummikub the Game</h1>
+            </a>
+            <ul class="nav">
+                <li>
+                    <a href="/about">Rules</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="gamecontainer">
+        <div class="container">
+            <div class="game">
+                <div class="grid">
+                @for(row <- 1 to fieldRows) {
+                    <div class="row">
+                    @for(col <- 1 to fieldCols) {
+                        <span class="cell">
+                        @{
+                            controller.field.getTileAt(row, col) match {
+                                case Some(t) => t.number
+                                case None => "_"
                             }
-                        </tr>
+                        }
+                        </span>
                     }
-                </table><br><br><br>
-            </span>
-            <div class="player">
-                <p>
-                    <strong><em>Active Player: </em></strong> @player_name
-                </p>
+                    </div>
+                }
+                </div>
+
+                <div class="grid">
+                @for(row <- 1 to fieldRows) {
+                    <div class="row">
+                    @for(col <- 1 to fieldCols) {
+                        <span class="cell">
+                        @{
+                            controller.rackOfActivePlayer.getTileAt(row, col) match {
+                                case Some(t) => {
+                                    t.colour.name match {
+                                        case "RED" => <span class="red">{t.number}</span>
+                                        case "BLUE" => <span class="blue">{t.number}</span>
+                                        case "YELLOW" => <span class="yellow">{t.number}</span>
+                                        case "GREEN" => <span class="green">{t.number}</span>
+                                        case "WHITE" => <span class="joker">J</span>
+                                    }
+                                }
+                                case None => "_"
+                            }
+                        }
+                        </span>
+                    }
+                    </div>
+                }
+                </div>
             </div>
-            <div class="gameState">
-                    <strong><em>Game State: </em></strong> @game_state
+
+            <div class="ctrl-container">
+                <div class="player">
+                    <p>
+                        <b>Active Player: </b> @player_name
+                    </p>
+                </div>
+                <div class="gameState">
+                    <p><b>Game State: </b> @game_state.toLowerCase</p>
+                </div>
+                <a class="btn sort" href="/sorted">
+                    <div class="inner">Sort</div>
+                    <div class="inner-back">troS</div>
+                </a>
+                <a class="btn draw" href="/draw"><div class="inner">Draw</div></a>
+                <a class="btn undo" href="/undo"><div class="inner">Undo</div></a>
+                <a class="btn redo" href="/redo"><div class="inner">Redo</div></a>
+                <a class="btn finish" href="/switchPlayer"><div class="inner">Finish Turn</div></a>
             </div>
         </div>
+
+    </div>
+    <div id="footer">
+        <a href="/" class="logo">
+            <img src="@routes.Assets.versioned("images/rummy.png")">
+        </a>
+        <ul class="nav">
+            <li>
+                <a href="/about">Rules</a>
+            </li>
+        </ul>
     </div>
 }
