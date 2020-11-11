@@ -1,0 +1,287 @@
+* {
+    box-sizing: border-box;
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#header > .container{
+    display: grid;
+    height: 90px;
+    grid-template-areas: "logo nav";
+    align-content: center;
+
+
+}
+
+.sticky-scroll{
+    position: fixed;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(20px);
+    top: 0;
+}
+
+#footer {
+    display: grid;
+    height: 90px;
+    grid-template-areas: "logo nav";
+    align-content: space-between;
+    max-width: 1051px;
+    width: 100%;
+    margin: 50px auto 0 auto;
+
+}
+
+#footer > .logo {
+    display: flex;
+}
+
+.container {
+    max-width: 1051px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.logo {
+    grid-area: logo;
+    height: 60px;
+    display: grid;
+    grid-template-areas: "images text . .";
+    grid-template-columns: 90px auto;
+    text-decoration: none;
+    color: black;
+}
+
+.logo > img {
+    height: 100%;
+    width: auto;
+    grid-area: images;
+}
+
+.logo > h1 {
+    text-transform: uppercase;
+    grid-area: text;
+    font-size: 32px;
+}
+
+.nav {
+    grid-area: nav;
+    justify-content: flex-end;
+    display: flex;
+    margin-right: 15px;
+}
+
+.nav > ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.nav > li {
+    list-style: none;
+}
+
+.nav > li > a {
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 32px;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.nav > li > a:hover {
+    transition: ease-in-out 20ms;
+    font-size: 36px;
+}
+
+.gamecontainer {
+    margin-top: 100px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.rules{
+    margin-top: 100px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    font-weight: bold;
+    color: black;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.rules > h2,h3,h4{
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clear {
+    clear: both;
+}
+
+.grid {
+    display: inline-block;
+    background-color: #fff;
+    padding: 0.05em;
+    margin: 1em;
+}
+
+.row {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.cell {
+    background-color: #d4ebf2;
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0.1em;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.red {
+    color: red;
+}
+
+.blue {
+    color: blue;
+}
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: #f0af0a;
+}
+
+.joker {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.ctrl-container {
+    border-top: 1px solid rgba(0,0,0,0.3);
+    margin-top: 20px;
+    display: grid;
+    grid-row-gap: 30px;
+    justify-content: space-between;
+    align-content: space-between;
+    grid-template-columns: 20% 20% 20% 20%;
+    grid-template-areas: "player player status status" "sort draw undo redo" ". finish finish .";
+}
+
+.btn {
+    padding: 10px 20px;
+    height: 60px;
+    border-radius: 15px;
+    background-color: #d4ebf2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+    transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+}
+
+.btn:hover {
+    font-size: 38px;
+    padding: 15px 25px;
+    font-weight: bold;
+    transform: rotateY(-360deg);
+    transition: transform .7s ease-in-out;
+}
+
+.inner {
+    transform: translateY(-50%) translateZ(60px) scale(.94);
+    top: 50%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 1px solid transparent;
+    -webkit-perspective: inherit;
+    perspective: inherit;
+    z-index: 2;
+}
+
+.inner-back{
+    transform: translateY(-50%) translateZ(-60px) scale(.94) rotateY(-180deg);
+    top: 50%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    box-sizing: border-box;
+    outline: 1px solid transparent;
+    perspective: inherit;
+    z-index: 2;
+}
+
+.player {
+    grid-area: player;
+}
+
+.gameState {
+    grid-area: status;
+}
+
+.sort {
+    grid-area: sort;
+}
+
+.draw {
+    grid-area: draw;
+}
+
+.redo {
+    grid-area: redo;
+}
+
+.undo {
+    grid-area: undo;
+}
+
+.finish {
+    grid-area: finish;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .ctrl-container {
+        margin-top: 50px;
+        display: grid;
+        grid-row-gap: 30px;
+        justify-content: space-between;
+        align-content: space-between;
+        grid-template-columns: 42% 42%;
+        grid-template-areas: "player status" "sort draw" "undo redo" "finish finish";
+    }
+}
