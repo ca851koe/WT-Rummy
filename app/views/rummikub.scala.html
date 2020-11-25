@@ -49,6 +49,8 @@
     controller.rackOfActivePlayer.COLS
 }
 
+@letter = @{'A' to 'M'}
+
 @main("Rummikub") {
 
     <div id="header">
@@ -68,39 +70,52 @@
         <div class="container">
             <div class="game">
                 <div class="grid">
+                    <div class="row">
+                        <span class="cell">_</span>
+                        @for(l <- letter) {
+                            <span class=" cell">@{l}</span>
+                        }
+                    </div>
                 @for(row <- 1 to fieldRows) {
                     <div class="row">
+                        <span class="cell">@{row}</span>
                     @for(col <- 1 to fieldCols) {
-                        <span class="cell">
+                        <span class="cell rtile" name="@{row}*@{col}" style="color:
                         @{
                             controller.field.getTileAt(row, col) match {
-                                case Some(t) => t.number
-                                case None => "_"
+                                case Some(t) => t.colour
+                                case None => "black"
+                            }
+                        }">
+                        @{
+                            controller.field.getTileAt(row, col) match {
+                                case Some(t) => if(t.joker){"J"} else {t.number}
+                                case None => " "
                             }
                         }
                         </span>
                     }
                     </div>
                 }
-                </div>
 
+                </div>
+@*rack*@
                 <div class="grid">
-                @for(row <- 1 to fieldRows) {
+                @for(row <- 1 to rackRows) {
                     <div class="row">
-                    @for(col <- 1 to fieldCols) {
-                        <span class="cell">
+                        <div class="cell">@{row+8}</div>
+                    @for(col <- 1 to rackCols) {
+                        <span class="cell rtile" id="clickable_tile" name="@{row+8}*@{col}" style="color:
+                            @{
+                            controller.rackOfActivePlayer.getTileAt(row, col) match {
+                                case Some(t) => t.colour
+                                case None => "black"
+                            }
+                        }">
                         @{
                             controller.rackOfActivePlayer.getTileAt(row, col) match {
-                                case Some(t) => {
-                                    t.colour.name match {
-                                        case "RED" => <span class="red">{t.number}</span>
-                                        case "BLUE" => <span class="blue">{t.number}</span>
-                                        case "YELLOW" => <span class="yellow">{t.number}</span>
-                                        case "GREEN" => <span class="green">{t.number}</span>
-                                        case "WHITE" => <span class="joker">J</span>
-                                    }
-                                }
-                                case None => "_"
+                                case Some(t) => if(t.joker){"J"} else {t.number}
+                                case None => " "
                             }
                         }
                         </span>
@@ -111,6 +126,9 @@
             </div>
 
             <div class="ctrl-container">
+                <div class="row">
+                    <span id="selected_tile_label" class="invisible alert alert-primary"></span>
+                </div>
                 <div class="player">
                     <p>
                         <b>Active Player: </b> @player_name

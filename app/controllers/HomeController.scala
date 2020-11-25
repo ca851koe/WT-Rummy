@@ -14,6 +14,12 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def rummiAsText = gameController.fieldToString + gameController.rackOfActivePlayerToString +
     gameController.activePlayerToString + gameController.gameStateToString
 
+  def moveTile(command: String) = Action {
+    val c = command.split("-%3E")
+    gameController.moveTile(c(0), c(1))
+    println(c)
+    Redirect("/")
+  }
 
   def rummi = Action {
     Ok(views.html.rummikub(gameController))
